@@ -3,8 +3,9 @@ import { Plus, Trash2, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { DialogFooter } from "./ui/dialog";
-import { createTable } from "@/lib/api";
+import { createTable} from "@/lib/api";
 import { toast } from "sonner";
+import { useParams } from "react-router-dom";
 
 interface Column {
     name: string;
@@ -15,13 +16,16 @@ const DATA_TYPES = ["INTEGER", "TEXT"];
 
 interface CreateTableInputProps {
     onClose?: () => void;
+    onRefresh? :() => void;
 }
 
-export function CreateTableInput({ onClose }: CreateTableInputProps) {
+export function CreateTableInput({ onClose , onRefresh }: CreateTableInputProps) {
     const [tableName, setTableName] = useState("");
     const [columns, setColumns] = useState<Column[]>([{ name: "", type: "TEXT" }]);
     const [loading, setLoading] = useState(false);
+    const { id } = useParams<{ id: string }>();
 
+   
     const handleAddColumn = () => {
         setColumns([...columns, { name: "", type: "TEXT" }]);
     }
@@ -39,19 +43,23 @@ export function CreateTableInput({ onClose }: CreateTableInputProps) {
     }
 
     const handleCreate = async () => {
+
         if (!tableName.trim()) {
             toast.error("Table name is required");
             return;
         }
-
         setLoading(true);
         try {
-            const WORKSPACE_ID = "1765384183209";
-            const res = await createTable(WORKSPACE_ID, tableName, columns);
+            if (!id) {
+                toast.error("Workspace ID not found");
+                return;
+            }
+            const res = await createTable(id, tableName, columns);
             if (res.error) {
                 toast.error(res.message || "Failed to create table");
             } else {
                 toast.success("Table created successfully");
+                onRefresh?.()
                 if (onClose) onClose();
             }
         } catch (error: any) {
@@ -64,18 +72,18 @@ export function CreateTableInput({ onClose }: CreateTableInputProps) {
     return (
         <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-                <label htmlFor="tableName" className="text-sm font-medium">Table Name</label>
+                <label htmlFor="tableName" className="text-sm font-medium">Table Name <span className="text-red-800">*</span></label>
                 <Input 
                     id="tableName" 
                     value={tableName} 
                     onChange={(e) => setTableName(e.target.value)} 
-                    placeholder="e.g. users" 
+                    placeholder="users" 
                 />
             </div>
 
             <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium">Columns</label>
+                    <label className="text-sm font-medium">Columns <span className="text-red-800">*</span></label>
                     <Button variant="outline" size="sm" onClick={handleAddColumn}>
                         <Plus className="mr-2 h-4 w-4" /> Add Column
                     </Button>
