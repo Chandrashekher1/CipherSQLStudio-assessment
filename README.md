@@ -85,6 +85,16 @@ This tool is perfect for learning SQL, practicing queries, or testing database l
     - constant.tsx 
 ```
 
+## UI && Screenshot
+
+<img width="946" height="754" alt="image" src="https://github.com/user-attachments/assets/fc830fcd-1ead-4ad1-a3c4-ac24ef726343" />
+<img width="1920" height="883" alt="image" src="https://github.com/user-attachments/assets/6486eefe-3f58-4f18-958c-919193ef0b95" />
+<img width="1884" height="837" alt="image" src="https://github.com/user-attachments/assets/3e4fef5f-40ef-41a1-9c12-2be4c29529af" />
+<img width="1291" height="643" alt="image" src="https://github.com/user-attachments/assets/0450e93e-67b5-42c8-9d99-7076ec6eb852" />
+<img width="474" height="769" alt="image" src="https://github.com/user-attachments/assets/0200fb66-ce24-43f7-8feb-01fca5a232a3" />
+
+
+
 ## Installation & Setup
 # Backend
 ```
