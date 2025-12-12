@@ -52,7 +52,7 @@ export function LandingPage() {
 
         <Input
           type="text"
-          placeholder="Workspace Name (Optional)"
+          placeholder="Workspace Name"
           value={workspaceName}
           onChange={(e) => setWorkspaceName(e.target.value)}
           className="w-full px-4 py-3 mb-4 rounded-lg bg-input text-input-foreground focus:ring-2 focus:ring-primary/80 outline-none"
