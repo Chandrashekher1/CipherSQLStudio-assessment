@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/config/db.mongo.ts","./src/config/db.postgress.ts","./src/models/workspace.model.ts","./src/routes/llm.routes.ts","./src/routes/sql.route.ts","./src/routes/workspace.route.ts","./src/startup/route.ts"],"version":"5.9.3"}
