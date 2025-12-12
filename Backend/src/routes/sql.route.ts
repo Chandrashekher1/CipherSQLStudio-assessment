@@ -38,7 +38,7 @@
         }
         catch(error: any){
             console.log(error)
-            res.status(500).json({success:false,message: "Internal Server Error", error: error.message})
+            res.status(500).json({success:false,message: "Failed to create table", error: error.message})
         }
     })
 
@@ -58,7 +58,7 @@
         }
         catch(error:any){
             console.log(error)
-            res.status(500).json({success:false,message: "Internal Server Error", error: error.message})
+            res.status(500).json({success:false,message: "Failed to insert row", error: error.message})
         }
     })
 
@@ -72,7 +72,7 @@
         }
         catch(error){
             console.log(error)
-            res.status(500).json({success:false,message: "Internal Server Error", error: error})
+            res.status(500).json({success:false,message: "Failed to execute query", error: error})
         }
     })
 
@@ -136,7 +136,7 @@
         } catch (error: any) {
             res.status(500).json({
                 success: false,
-                message: "Internal Server Error",
+                message: "Failed to fetch tables",
                 error: error.message,
             });
         }

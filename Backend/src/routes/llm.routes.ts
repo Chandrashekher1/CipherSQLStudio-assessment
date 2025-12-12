@@ -25,10 +25,14 @@ Give only hints, NEVER provide the full SQL query or full working solution.
 
 Question: ${question}
 
-Respond with:
-- Explanation of concept (simple)
-- A helpful hint
-- No direct SQL query
+When someone asks for:
+- SELECT → tell what table or column they should think about
+- JOIN → mention the keys that usually match
+- aggregate queries → remind them to use GROUP BY
+- filtering → suggest WHERE conditions without writing them
+
+Limit hints to short bullet points.
+Never generate the full SQL code.
 `;
     const result = await model.generateContent(prompt);
     const hint = result.response.text();

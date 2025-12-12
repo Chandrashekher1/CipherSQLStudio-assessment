@@ -24,16 +24,21 @@ router.post('/create', async (req,res) => {
         res.status(200).json({success: true, workspace, workspaceId})
 
     }
-    catch(error){
+    catch(error: any){
         console.log(error)
-        res.status(500).json({message: "Internal Server Error"})
+        res.status(500).json({success: false, message: "Failed to create workspace", error: error.message})
     }
 })
 router.get("/all", async (req, res) => {
-    const workspaces = await Workspace.find({});
-    console.log(workspaces);
-    
-    res.status(200).json({ success: true, workspaces });
+    try {
+        const workspaces = await Workspace.find({});
+        console.log(workspaces);
+        
+        res.status(200).json({ success: true, workspaces });
+    } catch (error: any) {
+        console.log(error);
+        res.status(500).json({ success: false, message: "Failed to fetch workspaces", error: error.message });
+    }
 });
 
 
