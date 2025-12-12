@@ -12,19 +12,24 @@ import { CreateTableInput } from "./CreateTableInput";
 import { useState } from "react";
 import { PlusIcon } from "lucide-react";
 
-export function Header({ onRefresh }: { onRefresh?: () => void }) {
+interface HeaderProps {
+    onRefresh?: () => void;
+    workspaceName?: string;
+}
+
+export function Header({ onRefresh, workspaceName }: HeaderProps) {
     const [open, setOpen] = useState(false);
 
     return (
-        <header className="flex items-center justify-between p-2 border-b border-border shadow-sm px-4 ">
+        <header className="flex items-center justify-between py-4 px-4 border-b border-border shadow-sm">
             <div className="flex items-center gap-2">
                 <SidebarTrigger />
-                <h1 className="text-xl font-bold ml-1">CipherSQLStudio</h1>
+                <h1 className="md:text-xl font-semibold  md:ml-1 bg-white text-muted-foreground rounded-full md:px-2 py-1">{workspaceName}</h1>
             </div>
             <div>
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
-                        <Button><PlusIcon/> Create Table</Button>
+                        <Button><PlusIcon/> <span className="hidden md:inline">Create Table</span></Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[525px]">
                         <DialogHeader>

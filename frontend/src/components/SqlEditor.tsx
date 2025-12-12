@@ -21,7 +21,7 @@ SELECT * FROM users;`);
     };
 
     return (
-        <div className="h-[400px] border border-border rounded-lg p-2 bg-card flex flex-col">
+        <div className="h-[300px] border border-border rounded-lg p-2 bg-card flex flex-col">
             <div className="flex justify-between border-b border-border py-2 px-4 shrink-0">
                 <p className="flex justify-center items-center gap-2 font-semibold"><span className="bg-primary text-primary-foreground rounded-full w-4 h-4"></span> SQL Query</p>
                 <div className="flex gap-2">
@@ -33,13 +33,13 @@ SELECT * FROM users;`);
                         onClick={handleRunClick}
                         disabled={isLoading}
                     >
-                        {isLoading ? <Loader2 className="animate-spin mr-2"/> : <PlayIcon className="mr-2"/>} 
-                        Run Query
+                        {isLoading ? <Loader2 className="animate-spin mr-2"/> : <PlayIcon className="md:mr-2"/>} 
+                        <span className="hidden md:inline">Run Query</span>
                     </Button>
                 </div>
             </div>
 
-            <div className="flex-1 my-4 min-h-0">
+            <div className="flex-1 my-2 md:my-4 min-h-0">
                 <Editor
                     height="100%"
                     defaultLanguage="sql"

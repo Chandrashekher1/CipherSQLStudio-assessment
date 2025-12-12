@@ -48,18 +48,18 @@ export function LLM({ isOpen, onClose }: LLMProps) {
     if (!isOpen) return null;
 
     return (
-        <div className="flex flex-col h-full border border-border bg-card/50 rounded-md">
-            <div className="flex items-center justify-between p-2 border-b border-border">
+        <div className="flex flex-col h-[300px] md:h-[600px] border border-border bg-card/50 rounded-md md:rounded-md">
+            <div className="md:flex items-center justify-between p-2 border-b border-border">
                 <div className="flex items-center gap-2">
                     <div className="bg-primary/10 p-1.5 rounded-full">
                         <Sparkles className="h-4 w-4 text-primary" />
                     </div>
-                    <div>
-                        <h3 className="font-semibold text-sm">Cipher AI</h3>
+                    <div className="flex justify-center items-center gap-2">
+                        <h3 className="font-bold text-sm">Cipher AI</h3>
                         <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded-full font-medium">Beta</span>
                     </div>
                 </div>
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onClose}>
+                <Button variant="ghost" size="icon" className="h-8 w-8 hidden md:inline" onClick={onClose}>
                     <X className="h-4 w-4" />
                 </Button>
             </div>

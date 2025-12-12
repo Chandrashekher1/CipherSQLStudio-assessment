@@ -12,7 +12,16 @@ interface Column {
     type: string;
 }
 
-const DATA_TYPES = ["INTEGER", "TEXT"];
+const DATA_TYPES = [
+    "INTEGER", 
+    "TEXT", 
+    "BOOLEAN", 
+    "VARCHAR(255)", 
+    "SERIAL", 
+    "DATE", 
+    "TIMESTAMP", 
+    "JSONB"
+];
 
 interface CreateTableInputProps {
     onClose?: () => void;

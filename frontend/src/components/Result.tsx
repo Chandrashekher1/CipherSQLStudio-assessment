@@ -9,7 +9,7 @@ export default function Result({ data, loading = false }: ResultProps) {
     const columns = data && data.length > 0 ? Object.keys(data[0]) : [];
 
     return (
-        <div className="my-4 h-[200px] border border-border rounded-lg p-2 bg-card flex flex-col">
+        <div className="my-4 h-[250px] border border-border rounded-lg p-2 bg-card flex flex-col">
             <div className="flex items-center gap-2 border-b border-border pb-2 font-semibold shrink-0">
                 <Table className="text-primary"/>
                 <span>Result</span>
