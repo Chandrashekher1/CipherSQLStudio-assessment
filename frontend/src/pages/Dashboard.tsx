@@ -3,7 +3,7 @@ import { LLM } from "@/components/LLM";
 import Result from "@/components/Result";
 import { AppSidebar } from "@/components/sidebar/Sidebar";
 import { SqlEditor } from "@/components/SqlEditor";
-import { runQuery } from "@/lib/api";
+import { runQuery, getAllWorkspaces } from "@/lib/api";
 import { useState } from "react";
 import { toast } from "sonner";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
@@ -22,6 +22,25 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const [refreshTables, setRefreshTables] = useState(false);
     const { id } = useParams<{ id: string }>();
+    const [workspaceName, setWorkspaceName] = useState<string>("");
+
+    useEffect(() => {
+        const fetchWorkspaceName = async () => {
+            if (!id) return;
+            try {
+                const data = await getAllWorkspaces();
+                if (data.success && data.workspaces) {
+                    const ws = data.workspaces.find((w: any) => w.workspaceId === id);
+                    if (ws) {
+                        setWorkspaceName(ws.name);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch workspace name", error);
+            }
+        };
+        fetchWorkspaceName();
+    }, [id]);
 
     useEffect(() => {
         if (!id) {
@@ -56,7 +75,7 @@ export default function Dashboard() {
         <SidebarProvider>
             <AppSidebar refresh={refreshTables} />
             <SidebarInset>
-                <Header onRefresh={() => setRefreshTables(prev => !prev)} />
+                <Header onRefresh={() => setRefreshTables(prev => !prev)} workspaceName={workspaceName} />
                 <div className="flex h-full w-full overflow-hidden relative">
                     <div className={`flex-1 w-full ${openLLM && !isMobile ? "md:w-[70%]" : "md:w-full"} justify-center overflow-auto flex flex-col h-full p-4 transition-all duration-300`}>
                         <SqlEditor 
@@ -67,19 +86,19 @@ export default function Dashboard() {
                         <Result data={results} loading={loading} />
                     </div>
                     {openLLM && !isMobile && (
-                        <div className="hidden md:block w-[30%] h-full p-4 border-l border-border animate-in slide-in-from-right-10 duration-300">
+                        <div className="hidden md:block w-[30%] h-full px-4 pt-2 mt-4 border-l border-border animate-in slide-in-from-right-10 duration-300">
                              <LLM isOpen={openLLM} onClose={() => setOpenLLM(false)} />
                         </div>
                     )}
 
                     {isMobile && (
                         <Sheet open={openLLM} onOpenChange={setOpenLLM}>
-                            <SheetContent side="bottom" className="h-[80vh] p-2 my-8 mx-8">
-                                <SheetHeader className="sr-only">
-                                    <SheetTitle>Cipher AI</SheetTitle>
-                                    <SheetDescription>Ask for SQL hints</SheetDescription>
+                            <SheetContent side="bottom" className="h-[60vh]">
+                                <SheetHeader className="">
+                                    {/* <SheetTitle>Cipher AI</SheetTitle> */}
+                                    {/* <SheetDescription>Ask for SQL hints</SheetDescription> */}
                                 </SheetHeader>
-                                <div className="h-full pt-4">
+                                <div className="h-full">
                                      <LLM isOpen={openLLM} onClose={() => setOpenLLM(false)} />
                                 </div>
                             </SheetContent>
