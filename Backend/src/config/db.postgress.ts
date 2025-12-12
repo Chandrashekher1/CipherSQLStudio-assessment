@@ -1,22 +1,28 @@
-import { Client } from "pg"
+import { Pool } from "pg";
 import dotenv from "dotenv"
 dotenv.config()
 
-export const client = new Client({
-   connectionString: process.env.POSTGRES_URL
+export const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false } 
 })
 
-export const postgressDB = async function connect(){
-    try{
-        await client.connect()
-        console.log("PostgresDB connected")
-    }
-    catch(error){
-        console.log("PostgresDB connection error", error)
-    }
+pool.on('error', (err, client) => {
+  console.error('Unexpected error on idle client', err)
+})
+
+export const postgressDB = async() => {
+  try {
+      const client = await pool.connect()
+      console.log("PostgreSQL connected")
+      client.release()
+  } 
+  catch(error){
+      console.log("PostgreSQL connection error", error)
+  }
 }
 
 
-export const setWorkSpaceSchema = async  (workspaceId : string) => {
-    await client.query(`SET search_path TO workspace_${workspaceId}`)
+export const setWorkspaceSchema = async (workspaceId: string) => {
+  await pool.query(`SET search_path TO workspace_${workspaceId}`);
 }
