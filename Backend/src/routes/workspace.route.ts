@@ -1,14 +1,18 @@
 import express from "express";
 import Workspace from "../models/workspace.model";
-import { client } from "../config/db.postgress";
+import { pool } from "../config/db.postgress";
 
 const router = express.Router();
 
-router.post('/', async (req,res) => {
+router.get('/', async (req,res) => {
+    res.send("SQL backend running...")
+})
+
+router.post('/create', async (req,res) => {
     try{
         const workspaceId = Date.now().toString()
 
-        await client.query(`CREATE SCHEMA IF NOT EXISTS workspace_${workspaceId}`)
+        await pool.query(`CREATE SCHEMA IF NOT EXISTS workspace_${workspaceId}`)
 
         const workspace = await Workspace.create({  
             workspaceId,
@@ -25,5 +29,12 @@ router.post('/', async (req,res) => {
         res.status(500).json({message: "Internal Server Error"})
     }
 })
+router.get("/all", async (req, res) => {
+    const workspaces = await Workspace.find({});
+    console.log(workspaces);
+    
+    res.status(200).json({ success: true, workspaces });
+});
+
 
 export default router
