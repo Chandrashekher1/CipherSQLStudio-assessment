@@ -1,11 +1,11 @@
-import { Table, Loader2, AlertCircle } from "lucide-react";
+import { Table, Loader2 } from "lucide-react";
 
 interface ResultProps {
-    data?: any[];
+    data?: any[] | null;
     loading?: boolean;
 }
 
-export default function Result({ data = [], loading = false }: ResultProps) {
+export default function Result({ data, loading = false }: ResultProps) {
     const columns = data && data.length > 0 ? Object.keys(data[0]) : [];
 
     return (
@@ -13,7 +13,7 @@ export default function Result({ data = [], loading = false }: ResultProps) {
             <div className="flex items-center gap-2 border-b border-border pb-2 font-semibold shrink-0">
                 <Table className="text-primary"/>
                 <span>Result</span>
-                {data.length > 0 && <span className="text-xs text-muted-foreground ml-2">({data.length} rows)</span>}
+                {data && data.length > 0 && <span className="text-xs text-muted-foreground ml-2">({data.length} rows)</span>}
             </div>
 
             <div className="flex-1 overflow-auto min-h-0 bg-background/50 rounded-md mt-2 relative">
@@ -22,7 +22,19 @@ export default function Result({ data = [], loading = false }: ResultProps) {
                         <Loader2 className="h-8 w-8 animate-spin text-primary" />
                         <p className="mt-2 text-sm text-muted-foreground">Running query...</p>
                     </div>
-                ) : data && data.length > 0 ? (
+                ) : !data ? (
+                     <div className="flex flex-col justify-center items-center h-full text-muted-foreground">
+                        <Table className="h-10 w-10 mb-2 opacity-50"/>
+                        <p>Run a query to see the result</p>
+                    </div>
+                ) : data.length === 0 ? (
+                    <div className="flex flex-col justify-center items-center h-full text-muted-foreground">
+                         <div className="h-10 w-10 mb-2 opacity-50 border-2 border-dashed border-muted-foreground rounded flex items-center justify-center">
+                            <span className="text-xl font-bold">!</span>
+                         </div>
+                        <p>No record found</p>
+                    </div>
+                ) : (
                     <table className="w-full text-sm text-left">
                         <thead className="text-xs uppercase bg-muted/50 sticky top-0 z-0">
                             <tr>
@@ -45,11 +57,6 @@ export default function Result({ data = [], loading = false }: ResultProps) {
                             ))}
                         </tbody>
                     </table>
-                ) : (
-                    <div className="flex flex-col justify-center items-center h-full text-muted-foreground">
-                        <Table className="h-10 w-10 mb-2 opacity-50"/>
-                        <p>Run a query to see the result</p>
-                    </div>
                 )}
             </div>
         </div>
