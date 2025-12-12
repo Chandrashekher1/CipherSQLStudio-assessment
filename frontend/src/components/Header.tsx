@@ -1,4 +1,4 @@
-import { Database } from "lucide-react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "./ui/button";
 import { 
     Dialog, 
@@ -10,20 +10,21 @@ import {
 } from "./ui/dialog";
 import { CreateTableInput } from "./CreateTableInput";
 import { useState } from "react";
+import { PlusIcon } from "lucide-react";
 
-export function Header() {
+export function Header({ onRefresh }: { onRefresh?: () => void }) {
     const [open, setOpen] = useState(false);
 
     return (
-        <header className="flex items-center justify-between p-2 border-b border-boder shadow-sm px-4 cursor-pointer">
-            <div className="flex items-center border-r border-boder pr-2">
-                <span className="bg-blue-500 rounded p-2 text-white rounded-full"><Database/></span>
+        <header className="flex items-center justify-between p-2 border-b border-border shadow-sm px-4 ">
+            <div className="flex items-center gap-2">
+                <SidebarTrigger />
                 <h1 className="text-xl font-bold ml-1">CipherSQLStudio</h1>
             </div>
             <div>
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
-                        <Button>Create Table</Button>
+                        <Button><PlusIcon/> Create Table</Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[525px]">
                         <DialogHeader>
@@ -32,7 +33,7 @@ export function Header() {
                                 Define the table structure by adding columns.
                             </DialogDescription>
                         </DialogHeader>
-                        <CreateTableInput onClose={() => setOpen(false)} />
+                        <CreateTableInput onClose={() => setOpen(false)} onRefresh={onRefresh}/>
                     </DialogContent>
                 </Dialog>
             </div>
