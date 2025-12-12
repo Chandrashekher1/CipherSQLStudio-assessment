@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createWorkspace } from "../lib/api";
 import { Database } from "lucide-react";
@@ -8,7 +8,6 @@ import { toast } from "sonner";
 
 export function LandingPage() {
   const navigate = useNavigate();
-  const [workspaceIdInput, setWorkspaceIdInput] = useState("");
   const [workspaceName, setWorkspaceName] = useState("");
   const [loading, setLoading] = useState(false);
 
