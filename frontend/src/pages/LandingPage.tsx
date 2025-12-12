@@ -47,7 +47,7 @@ export function LandingPage() {
           </div>
         </div>
 
-        <h1 className="text-3xl font-bold text-muted-foreground">CipherSQLStudio</h1>
+        <h1 className="text-3xl font-bold">CipherSQLStudio</h1>
         <p className="text-muted-foreground mt-1 mb-8">Browser-Based SQL Sandbox</p>
 
         <Input
