@@ -1,1 +1,1 @@
-export const BACKEND_URL="https://ciphersqlstudio.onrender.com"
+export const BACKEND_URL="https://ciphersqlstudio-assessment.onrender.com"
